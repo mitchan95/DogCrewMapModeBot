@@ -1,6 +1,6 @@
 import random
 import discord
-import os
+import copy
 
 client = discord.Client()
 
@@ -14,6 +14,8 @@ SLAYER = ["Aquarius", "Bazaar", "Live Fire", "Recharge", "Streets"]
 
 def series(length):
     gts = list(OBJS)
+    slayer_maps = copy.deepcopy(SLAYER)
+    temp_objs = copy.deepcopy(OBJS)
     picked_gt = []
     picked_maps = []
     games = []
@@ -21,14 +23,23 @@ def series(length):
     for i in range(length):
         if i == 1 or i == 4:
             picked_maps.append(
-                random.choice(list(set(SLAYER) - set(picked_maps))))
-            games.append("Slayer - " + picked_maps[i])
+                random.choice(list(set(slayer_maps) - set(picked_maps))))
+            slayer_maps.remove(picked_maps[-1])
+            games.append("Slayer - " + picked_maps[-1])
+        elif i == 5:
+            picked_gt.append(random.choice(list(set(gts) - set(['Capture the Flag']))))
+            picked_maps.append(random.choice(list(set(temp_objs[picked_gt[-1]]) - set([picked_maps[-1]]))))
+            games.append(picked_gt[-1] + " - " + picked_maps[-1])
+        elif i == 6:
+            picked_maps.append(random.choice(list(set(slayer_maps) - set([picked_maps[-1]]))))
+            games.append("Slayer - " + picked_maps[-1])
         else:
             picked_gt.append(random.choice(list(set(gts) - set(picked_gt))))
             picked_maps.append(
                 random.choice(
-                    list(set(OBJS[picked_gt[-1]]) - set(picked_maps))))
-            games.append(picked_gt[-1] + " - " + picked_maps[i])
+                    list(set(temp_objs[picked_gt[-1]]) - set(picked_maps))))
+            temp_objs[picked_gt[-1]].remove(picked_maps[-1])
+            games.append(picked_gt[-1] + " - " + picked_maps[-1])
 
     return games
 
@@ -62,4 +73,4 @@ async def on_message(message):
         await message.channel.send(embed=embed)
 
 
-client.run(os.environ['token'])
+client.run('OTQxNTk1NzQxOTA5MDUzNTAw.YgYPXg.ipMivbRmXk1hm4SXfjHp3FDC5d8')
