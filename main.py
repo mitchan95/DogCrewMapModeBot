@@ -27,11 +27,11 @@ def series(length):
             slayer_maps.remove(picked_maps[-1])
             games.append("Slayer - " + picked_maps[-1])
         elif i == 5:
-            picked_gt.append(random.choice(list(set(gts) - set(['Capture the Flag']))))
-            picked_maps.append(random.choice(list(set(temp_objs[picked_gt[-1]]) - set([picked_maps[-1]]))))
+            picked_gt.append(random.choice(list(set(gts) - {'Capture the Flag'})))
+            picked_maps.append(random.choice(list(set(temp_objs[picked_gt[-1]]) - {picked_maps[-1]})))
             games.append(picked_gt[-1] + " - " + picked_maps[-1])
         elif i == 6:
-            picked_maps.append(random.choice(list(set(slayer_maps) - set([picked_maps[-1]]))))
+            picked_maps.append(random.choice(list(set(slayer_maps) - {picked_maps[-1]})))
             games.append("Slayer - " + picked_maps[-1])
         else:
             picked_gt.append(random.choice(list(set(gts) - set(picked_gt))))
@@ -55,6 +55,14 @@ def create_embed(matches, length):
     return embed
 
 
+def coinflip():
+    return random.choice(["Heads", "Tails"])
+
+
+def rand_number():
+    return random.randint(1, 10)
+
+
 @client.event
 async def on_ready():
     print("We have logged in as {0.user}".format(client))
@@ -76,5 +84,9 @@ async def on_message(message):
         matches = series(7)
         embed = create_embed(matches, 7)
         await message.channel.send(embed=embed)
+    elif message.content.casefold() == "!coinflip":
+        await message.channel.send(coinflip())
+    elif message.content.casefold() == "!number":
+        await message.channel.send(rand_number())
 
 client.run('OTQxNTk1NzQxOTA5MDUzNTAw.YgYPXg.ipMivbRmXk1hm4SXfjHp3FDC5d8')
