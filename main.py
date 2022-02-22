@@ -44,6 +44,17 @@ def series(length):
     return games
 
 
+def create_embed(matches, length):
+    embed = discord.Embed(title="BO" + str(length) + " Series", description="Maps to be played in best of " + str(length) + " series")
+    embed.set_thumbnail(
+        url="https://i1.wp.com/www.thexboxhub.com/wp-content/uploads/2022/02/halo-infinite-header.jpg?fit=1083%2C609&ssl=1")
+
+    for i in range(len(matches)):
+        embed.add_field(name="Game " + str(i+1), value=matches[0], inline=False)
+
+    return embed
+
+
 @client.event
 async def on_ready():
     print("We have logged in as {0.user}".format(client))
@@ -53,24 +64,17 @@ async def on_ready():
 async def on_message(message):
     if message.author == client.user:
         return
-    if message.content == "!bo3":
+    if message.content.casefold == "!bo3":
         matches = series(3)
-        embed = discord.Embed(title="BO3 Series", description="Maps to be played in best of 3 series")
-        embed.add_field(name="Game 1", value=matches[0], inline=False)
-        embed.add_field(name="Game 2", value=matches[1], inline=False)
-        embed.add_field(name="Game 3", value=matches[2], inline=False)
-        embed.set_thumbnail(url="https://i1.wp.com/www.thexboxhub.com/wp-content/uploads/2022/02/halo-infinite-header.jpg?fit=1083%2C609&ssl=1")
+        embed = create_embed(matches, 3)
         await message.channel.send(embed=embed)
-    elif message.content == "!bo5":
+    elif message.content.casefold() == "!bo5":
         matches = series(5)
-        embed = discord.Embed(title="BO5 Series", description="Maps to be played in best of 5 series")
-        embed.set_thumbnail(url="https://i1.wp.com/www.thexboxhub.com/wp-content/uploads/2022/02/halo-infinite-header.jpg?fit=1083%2C609&ssl=1")
-        embed.add_field(name="Game 1", value=matches[0], inline=False)
-        embed.add_field(name="Game 2", value=matches[1], inline=False)
-        embed.add_field(name="Game 3", value=matches[2], inline=False)
-        embed.add_field(name="Game 4", value=matches[3], inline=False)
-        embed.add_field(name="Game 5", value=matches[4], inline=False)
+        embed = create_embed(matches, 5)
         await message.channel.send(embed=embed)
-
+    elif message.content.casefold() == "!bo7":
+        matches = series(7)
+        embed = create_embed(matches, 7)
+        await message.channel.send(embed=embed)
 
 client.run('OTQxNTk1NzQxOTA5MDUzNTAw.YgYPXg.ipMivbRmXk1hm4SXfjHp3FDC5d8')
