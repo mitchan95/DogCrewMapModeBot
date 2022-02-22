@@ -50,7 +50,7 @@ def create_embed(matches, length):
         url="https://i1.wp.com/www.thexboxhub.com/wp-content/uploads/2022/02/halo-infinite-header.jpg?fit=1083%2C609&ssl=1")
 
     for i in range(len(matches)):
-        embed.add_field(name="Game " + str(i+1), value=matches[0], inline=False)
+        embed.add_field(name="Game " + str(i+1), value=matches[i], inline=False)
 
     return embed
 
