@@ -64,7 +64,7 @@ async def on_ready():
 async def on_message(message):
     if message.author == client.user:
         return
-    if message.content.casefold == "!bo3":
+    if message.content.casefold() == "!bo3":
         matches = series(3)
         embed = create_embed(matches, 3)
         await message.channel.send(embed=embed)
