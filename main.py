@@ -63,7 +63,7 @@ def coinflip():
 def rand_number():
     return random.randint(1, 10)
 
-'''
+
 @client.event
 async def on_ready():
     print("We have logged in as {0.user}".format(client))
@@ -90,11 +90,4 @@ async def on_message(message):
     elif message.content.casefold() == "!number":
         await message.channel.send(rand_number())
 
-client.run('OTQxNTk1NzQxOTA5MDUzNTAw.YgYPXg.ipMivbRmXk1hm4SXfjHp3FDC5d8')'''
-
-print(series(5))
-print(series(5))
-print(series(5))
-print(series(5))
-print(series(5))
-print(series(5))
+client.run('OTQxNTk1NzQxOTA5MDUzNTAw.YgYPXg.ipMivbRmXk1hm4SXfjHp3FDC5d8')
