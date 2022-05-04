@@ -36,13 +36,9 @@ def series(length):
             games.append("Slayer - " + picked_maps[-1])
         else:
             picked_gt.append(random.choice(list(set(gts) - set(picked_gt))))
-            if ["Live Fire", "Recharge", "Streets"] in picked_maps:
-                picked_maps.append(
-                    random.choice(temp_objs[picked_gt[-1]]))
-            else:
-                picked_maps.append(
-                    random.choice(
-                        list(set(temp_objs[picked_gt[-1]]) - set(picked_maps))))
+            picked_maps.append(
+                random.choice(
+                    temp_objs[picked_gt[-1]]))
             temp_objs[picked_gt[-1]].remove(picked_maps[-1])
             games.append(picked_gt[-1] + " - " + picked_maps[-1])
 
@@ -67,7 +63,7 @@ def coinflip():
 def rand_number():
     return random.randint(1, 10)
 
-
+'''
 @client.event
 async def on_ready():
     print("We have logged in as {0.user}".format(client))
@@ -94,4 +90,11 @@ async def on_message(message):
     elif message.content.casefold() == "!number":
         await message.channel.send(rand_number())
 
-client.run('OTQxNTk1NzQxOTA5MDUzNTAw.YgYPXg.ipMivbRmXk1hm4SXfjHp3FDC5d8')
+client.run('OTQxNTk1NzQxOTA5MDUzNTAw.YgYPXg.ipMivbRmXk1hm4SXfjHp3FDC5d8')'''
+
+print(series(5))
+print(series(5))
+print(series(5))
+print(series(5))
+print(series(5))
+print(series(5))
