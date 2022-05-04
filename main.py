@@ -24,7 +24,7 @@ def series(length):
     for i in range(length):
         if i == 1 or i == 4:
             picked_maps.append(
-                random.choice(list(set(slayer_maps) - set(picked_maps))))
+                random.choice(list(set(slayer_maps) - {picked_maps[-1]})))
             slayer_maps.remove(picked_maps[-1])
             games.append("Slayer - " + picked_maps[-1])
         elif i == 5:
@@ -36,9 +36,13 @@ def series(length):
             games.append("Slayer - " + picked_maps[-1])
         else:
             picked_gt.append(random.choice(list(set(gts) - set(picked_gt))))
-            picked_maps.append(
-                random.choice(
-                    list(set(temp_objs[picked_gt[-1]]) - set(picked_maps))))
+            if ["Live Fire", "Recharge", "Streets"] in picked_maps:
+                picked_maps.append(
+                    random.choice(temp_objs[picked_gt[-1]]))
+            else:
+                picked_maps.append(
+                    random.choice(
+                        list(set(temp_objs[picked_gt[-1]]) - set(picked_maps))))
             temp_objs[picked_gt[-1]].remove(picked_maps[-1])
             games.append(picked_gt[-1] + " - " + picked_maps[-1])
 
