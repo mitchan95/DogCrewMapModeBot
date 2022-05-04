@@ -7,9 +7,10 @@ client = discord.Client()
 OBJS = {
     "Capture the Flag": ["Aquarius", "Bazaar"],
     "Oddball": ["Live Fire", "Recharge", "Streets"],
-    "Strongholds": ["Live Fire", "Recharge", "Streets"]
+    "Strongholds": ["Live Fire", "Recharge", "Streets"],
+    "KOTH": ["Live Fire", "Recharge", "Streets"]
 }
-SLAYER = ["Aquarius", "Bazaar", "Live Fire", "Recharge", "Streets"]
+SLAYER = ["Aquarius", "Live Fire", "Recharge", "Streets"]
 
 
 def series(length):
