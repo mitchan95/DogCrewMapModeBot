@@ -20,29 +20,50 @@ def series(length):
     picked_gt = []
     picked_maps = []
     games = []
+    map = None
 
     for i in range(length):
         if i == 1 or i == 4:
-            picked_maps.append(
-                random.choice(list(set(slayer_maps) - {picked_maps[-1]})))
+            while True:
+                map = random.choice(list(set(slayer_maps) - {picked_maps[-1]}))
+                if (picked_maps.count(map) < 2 and map != picked_maps[-1]):
+                    picked_maps.append(map)
+                    break
+
             slayer_maps.remove(picked_maps[-1])
             games.append("Slayer - " + picked_maps[-1])
         elif i == 5:
             picked_gt.append(random.choice(list(set(gts) - {'Capture the Flag'})))
-            picked_maps.append(random.choice(list(set(temp_objs[picked_gt[-1]]) - {picked_maps[-1]})))
+            while True:
+                map = random.choice(list(set(temp_objs[picked_gt[-1]]) - {picked_maps[-1]}))
+                if (picked_maps.count(map) < 2 and map != picked_maps[-1]):
+                    picked_maps.append(map)
+                    break
+
             games.append(picked_gt[-1] + " - " + picked_maps[-1])
         elif i == 6:
-            picked_maps.append(random.choice(list(set(slayer_maps) - {picked_maps[-1]})))
+            while True:
+                map = random.choice(list(set(slayer_maps) - {picked_maps[-1]}))
+                if (picked_maps.count(map) < 2 and map != picked_maps[-1]):
+                    picked_maps.append(map)
+                    break
+
             games.append("Slayer - " + picked_maps[-1])
         else:
             picked_gt.append(random.choice(list(set(gts) - set(picked_gt))))
-            picked_maps.append(
-                random.choice(
-                    temp_objs[picked_gt[-1]]))
+            while True:
+                map = random.choice(temp_objs[picked_gt[-1]])
+                if (len(picked_maps) == 0):
+                    break
+                elif (picked_maps.count(map) < 2 and map != picked_maps[-1]):
+                    break
+
+            picked_maps.append(map)
             temp_objs[picked_gt[-1]].remove(picked_maps[-1])
             games.append(picked_gt[-1] + " - " + picked_maps[-1])
 
     return games
+
 
 
 def create_embed(matches, length):
