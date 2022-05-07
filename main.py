@@ -111,4 +111,7 @@ async def on_message(message):
     elif message.content.casefold() == "!number":
         await message.channel.send(rand_number())
 
-client.run('OTQxNTk1NzQxOTA5MDUzNTAw.YgYPXg.ipMivbRmXk1hm4SXfjHp3FDC5d8')
+with open("token.txt") as f:
+    token = f.readline().rstrip()
+
+client.run(token)
