@@ -39,6 +39,7 @@ def series(length):
                 if (picked_maps.count(map) < 2 and map != picked_maps[-1]):
                     picked_maps.append(map)
                     break
+            games.append(picked_gt[-1] + " - " + picked_maps[-1])
         elif i == 5:
             picked_gt.append(random.choice(list(set(gts) - {'Capture the Flag'})))
             while True:
