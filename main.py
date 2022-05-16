@@ -32,6 +32,13 @@ def series(length):
 
             slayer_maps.remove(picked_maps[-1])
             games.append("Slayer - " + picked_maps[-1])
+        elif i == 2:
+            picked_gt.append('Capture the Flag')
+            while True:
+		map = random.choice(list(set(temp_objs[picked_gt[-1]]) - {picked_maps[-1]}))
+		if (picked_maps.count(map) < 2 and map != picked_maps[-1]):
+		    picked_maps.append(map)
+		    break
         elif i == 5:
             picked_gt.append(random.choice(list(set(gts) - {'Capture the Flag'})))
             while True:
