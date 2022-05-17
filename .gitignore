@@ -1,1 +1,5 @@
 *.txt
+*.py.save
+*.env
+*.idea
+*.pub
