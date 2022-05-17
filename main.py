@@ -61,7 +61,7 @@ def series(length):
             if i == 0:
                 picked_gt.append(random.choice(list(set(gts) - {'Capture the Flag'})))
             else:
-                picked_gt.append(random.choice(list(set(gts) - set(picked_gt)))))
+                picked_gt.append(random.choice(list(set(gts) - set(picked_gt))))
             while True:
                 map = random.choice(temp_objs[picked_gt[-1]])
                 if (len(picked_maps) == 0):
