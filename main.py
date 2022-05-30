@@ -78,12 +78,17 @@ def create_embed(matches, length):
 
 
 def coinflip():
-    return random.choice(["Heads", "Tails"])
+    percent = random.randint(0, 100);
+    if percent < 50:
+        return "Heads"
+    elif percent > 50:
+        return "Tails"
+    else:
+        return "You're both losers!"
 
 
 def rand_number():
     return random.randint(1, 10)
-
 
 @client.event
 async def on_ready():
