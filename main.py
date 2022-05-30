@@ -20,70 +20,59 @@ def series(length):
     picked_gt = []
     picked_maps = []
     games = []
-    map = None
+    cur_map = None
 
     for i in range(length):
-        if i == 1 or i == 4:
-            while True:
-                map = random.choice(list(set(slayer_maps) - {picked_maps[-1]}))
-                if (picked_maps.count(map) < 2 and map != picked_maps[-1]):
-                    picked_maps.append(map)
+        if i == 1 or i == 4 or i == 6:
+            while True:  # Pick a random slayer map, but make sure the map hasn't been played in the last 2 matches
+                cur_map = random.choice(list(set(slayer_maps) - {picked_maps[-1]}))
+                if picked_maps.count(cur_map) < 2 and cur_map != picked_maps[-1] and (cur_map != picked_maps[-2] if (i == 4 or i == 6) else True):
+                    picked_maps.append(cur_map)
                     break
 
             slayer_maps.remove(picked_maps[-1])
             games.append("Slayer - " + picked_maps[-1])
-        elif i == 2:
-            picked_gt.append('Capture the Flag')
-            while True:
-                map = random.choice(list(set(temp_objs[picked_gt[-1]]) - {picked_maps[-1]}))
-                if (picked_maps.count(map) < 2 and map != picked_maps[-1]):
-                    picked_maps.append(map)
-                    break
-            games.append(picked_gt[-1] + " - " + picked_maps[-1])
         elif i == 5:
             picked_gt.append(random.choice(list(set(gts) - {'Capture the Flag'})))
             while True:
-                map = random.choice(list(set(temp_objs[picked_gt[-1]]) - {picked_maps[-1]}))
-                if (picked_maps.count(map) < 2 and map != picked_maps[-1]):
-                    picked_maps.append(map)
+                cur_map = random.choice(list(set(temp_objs[picked_gt[-1]]) - {picked_maps[-1]}))
+                if picked_maps.count(cur_map) < 2 and cur_map != picked_maps[-1]:
+                    picked_maps.append(cur_map)
                     break
 
             games.append(picked_gt[-1] + " - " + picked_maps[-1])
         elif i == 6:
             while True:
-                map = random.choice(list(set(slayer_maps) - {picked_maps[-1]}))
-                if (picked_maps.count(map) < 2 and map != picked_maps[-1]):
-                    picked_maps.append(map)
+                cur_map = random.choice(list(set(slayer_maps) - {picked_maps[-1]}))
+                if picked_maps.count(cur_map) < 2 and cur_map != picked_maps[-1]:
+                    picked_maps.append(cur_map)
                     break
 
             games.append("Slayer - " + picked_maps[-1])
         else:
-            if i == 0:
-                picked_gt.append(random.choice(list(set(gts) - {'Capture the Flag'})))
-            else:
-                picked_gt.append(random.choice(list(set(gts) - set(picked_gt))))
+            picked_gt.append(random.choice(list(set(gts) - set(picked_gt))))
             while True:
-                map = random.choice(temp_objs[picked_gt[-1]])
-                if (len(picked_maps) == 0):
+                cur_map = random.choice(temp_objs[picked_gt[-1]])
+                if len(picked_maps) == 0:
                     break
-                elif (picked_maps.count(map) < 2 and map != picked_maps[-1]):
+                elif picked_maps.count(cur_map) < 2 and cur_map != picked_maps[-1] and cur_map != picked_maps[-2]:
                     break
 
-            picked_maps.append(map)
+            picked_maps.append(cur_map)
             temp_objs[picked_gt[-1]].remove(picked_maps[-1])
             games.append(picked_gt[-1] + " - " + picked_maps[-1])
 
     return games
 
 
-
 def create_embed(matches, length):
-    embed = discord.Embed(title="BO" + str(length) + " Series", description="Maps to be played in best of " + str(length) + " series")
+    embed = discord.Embed(title="BO" + str(length) + " Series",
+                          description="Maps to be played in best of " + str(length) + " series")
     embed.set_thumbnail(
         url="https://i1.wp.com/www.thexboxhub.com/wp-content/uploads/2022/02/halo-infinite-header.jpg?fit=1083%2C609&ssl=1")
 
     for i in range(len(matches)):
-        embed.add_field(name="Game " + str(i+1), value=matches[i], inline=False)
+        embed.add_field(name="Game " + str(i + 1), value=matches[i], inline=False)
 
     return embed
 
@@ -121,6 +110,7 @@ async def on_message(message):
         await message.channel.send(coinflip())
     elif message.content.casefold() == "!number":
         await message.channel.send(rand_number())
+
 
 with open("token.txt") as f:
     token = f.readline().rstrip()
