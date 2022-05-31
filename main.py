@@ -116,7 +116,7 @@ async def on_message(message):
     elif message.content.casefold() == "!number":
         await message.channel.send(rand_number())
     elif message.content.casefold() == "!botservers":
-        message.channel.send(len(client.servers))
+        await message.channel.send("I'm in " + str(len(client.guilds)) + " servers!")
 
 
 with open("token.txt") as f:
