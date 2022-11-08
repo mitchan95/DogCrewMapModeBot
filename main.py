@@ -5,12 +5,12 @@ import copy
 client = discord.Client()
 
 OBJS = {
-    "Capture the Flag": ["Aquarius", "Bazaar", "Catalyst"],
+    "Capture the Flag": ["Aquarius", "Catalyst", "Argyle"],
     "Oddball": ["Live Fire", "Recharge", "Streets"],
     "Strongholds": ["Live Fire", "Recharge", "Streets"],
     "KOTH": ["Live Fire", "Recharge", "Streets"]
 }
-SLAYER = ["Aquarius", "Catalyst", "Live Fire", "Recharge", "Streets"]
+SLAYER = ["Aquarius", "Live Fire", "Recharge", "Streets"]
 
 
 def series(length):
@@ -73,6 +73,8 @@ def create_embed(matches, length):
 
     for i in range(len(matches)):
         embed.add_field(name="Game " + str(i + 1), value=matches[i], inline=False)
+
+    embed.set_footer(text="Spar needs a booster seat to see his monitior.")
 
     return embed
 
