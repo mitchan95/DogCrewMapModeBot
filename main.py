@@ -2,8 +2,10 @@ import random
 import discord
 import copy
 
-client = discord.Client()
+from datetime import datetime
+import threading
 
+client = discord.Client()
 OBJS = {
     "Capture the Flag": ["Aquarius", "Catalyst", "Argyle", "Detachment", "Empyrean"],
     "Oddball": ["Live Fire", "Recharge", "Streets", "Detachment", "Empyrean"],
@@ -71,7 +73,7 @@ def create_embed(matches, length):
     for i in range(len(matches)):
         embed.add_field(name="Game " + str(i + 1), value=matches[i], inline=False)
 
-    embed.set_footer(text="Spar needs a booster seat to see his monitior.")
+    #embed.set_footer(text="Spar needs a booster seat to see his monitior.")
 
     return embed
 
@@ -94,31 +96,54 @@ async def on_ready():
     print("We have logged in as {0.user}".format(client))
 
 
+COMMAND_LOG_COUNT = {'BO3': 0, 'BO5': 0, 'BO7': 0, 'Coinflip': 0, 'Number': 0}
+
 @client.event
 async def on_message(message):
     if message.author == client.user:
         return
     if message.content.casefold() == "!bo3":
+        COMMAND_LOG_COUNT.BO3 += 1
         matches = series(3)
         embed = create_embed(matches, 3)
         await message.channel.send(embed=embed)
     elif message.content.casefold() == "!bo5":
+        COMMAND_LOG_COUNT.BO5 += 1
         matches = series(5)
         embed = create_embed(matches, 5)
         await message.channel.send(embed=embed)
     elif message.content.casefold() == "!bo7":
+        COMMAND_LOG_COUNT.BO7 += 1
         matches = series(7)
         embed = create_embed(matches, 7)
         await message.channel.send(embed=embed)
     elif message.content.casefold() == "!coinflip":
+        COMMAND_LOG_COUNT.Coinflip += 1
         await message.channel.send(coinflip())
     elif message.content.casefold() == "!number":
+        COMMAND_LOG_COUNT.Number += 1
         await message.channel.send(rand_number())
     elif message.content.casefold() == "!botservers":
         await message.channel.send("I'm in " + str(len(client.guilds)) + " servers!")
 
-
 with open("token.txt") as f:
     token = f.readline().rstrip()
+
+def checkTime():
+    # This function runs periodically every 1 second
+    threading.Timer(60, checkTime).start()
+
+    now = datetime.now()
+
+    current_time = now.strftime("%H:%M:%S")
+    print("Current Time =", current_time)
+
+    if(current_time == '20:15:00'):  # check if matches with the desired time
+        f.open("commandLog.txt", "a")
+        f.write(COMMAND_LOG_COUNT)
+        f.close()
+
+
+checkTime()
 
 client.run(token)
