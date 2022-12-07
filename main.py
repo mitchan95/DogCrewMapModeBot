@@ -5,13 +5,11 @@ import copy
 client = discord.Client()
 
 OBJS = {
-    "Capture the Flag": ["Aquarius", "Catalyst", "Argyle"],
-    "Oddball": ["Live Fire", "Recharge", "Streets"],
-    "Strongholds": ["Live Fire", "Recharge", "Streets"],
-    "KOTH": ["Live Fire", "Recharge", "Streets"]
+    "Capture the Flag": ["Aquarius", "Catalyst", "Argyle", "Detachment", "Empyrean"],
+    "Oddball": ["Live Fire", "Recharge", "Streets", "Detachment", "Empyrean"],
+    "Strongholds": ["Live Fire", "Recharge", "Streets", "Detachment"]
 }
-SLAYER = ["Aquarius", "Live Fire", "Recharge", "Streets"]
-
+SLAYER = ["Aquarius", "Live Fire", "Recharge", "Streets", "Detachment"]
 
 def series(length):
     gts = list(OBJS)
@@ -63,7 +61,6 @@ def series(length):
             games.append(picked_gt[-1] + " - " + picked_maps[-1])
 
     return games
-
 
 def create_embed(matches, length):
     embed = discord.Embed(title="BO" + str(length) + " Series",
