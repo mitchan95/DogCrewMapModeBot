@@ -1,17 +1,19 @@
 import random
 import discord
 import copy
+import json
 
 from datetime import datetime
 import threading
 
 client = discord.Client()
 OBJS = {
-    "Capture the Flag": ["Aquarius", "Catalyst", "Argyle", "Detachment", "Empyrean"],
-    "Oddball": ["Live Fire", "Recharge", "Streets", "Detachment", "Empyrean"],
-    "Strongholds": ["Live Fire", "Recharge", "Streets", "Detachment"]
+    "Capture the Flag": ["Aquarius" "Argyle", "Detachment", "Empyrean"],
+    "Oddball": ["Live Fire", "Recharge", "Streets"],
+    "Strongholds": ["Live Fire", "Recharge", "Streets"],
+    "King of the Hill": ["Live Fire", "Recharge", "Streets"]
 }
-SLAYER = ["Aquarius", "Live Fire", "Recharge", "Streets", "Detachment"]
+SLAYER = ["Aquarius", "Live Fire", "Recharge", "Streets", "Empyrean"]
 
 def series(length):
     gts = list(OBJS)
@@ -103,25 +105,25 @@ async def on_message(message):
     if message.author == client.user:
         return
     if message.content.casefold() == "!bo3":
-        COMMAND_LOG_COUNT.BO3 += 1
+        COMMAND_LOG_COUNT['BO3'] += 1
         matches = series(3)
         embed = create_embed(matches, 3)
         await message.channel.send(embed=embed)
     elif message.content.casefold() == "!bo5":
-        COMMAND_LOG_COUNT.BO5 += 1
+        COMMAND_LOG_COUNT['BO5'] += 1
         matches = series(5)
         embed = create_embed(matches, 5)
         await message.channel.send(embed=embed)
     elif message.content.casefold() == "!bo7":
-        COMMAND_LOG_COUNT.BO7 += 1
+        COMMAND_LOG_COUNT['BO7'] += 1
         matches = series(7)
         embed = create_embed(matches, 7)
         await message.channel.send(embed=embed)
     elif message.content.casefold() == "!coinflip":
-        COMMAND_LOG_COUNT.Coinflip += 1
+        COMMAND_LOG_COUNT['Coinflip'] += 1
         await message.channel.send(coinflip())
     elif message.content.casefold() == "!number":
-        COMMAND_LOG_COUNT.Number += 1
+        COMMAND_LOG_COUNT['Number'] += 1
         await message.channel.send(rand_number())
     elif message.content.casefold() == "!botservers":
         await message.channel.send("I'm in " + str(len(client.guilds)) + " servers!")
@@ -131,17 +133,16 @@ with open("token.txt") as f:
 
 def checkTime():
     # This function runs periodically every 1 second
-    threading.Timer(60, checkTime).start()
+    threading.Timer(3600, checkTime).start()
 
     now = datetime.now()
 
     current_time = now.strftime("%H:%M:%S")
     print("Current Time =", current_time)
 
-    if(current_time == '20:15:00'):  # check if matches with the desired time
-        f.open("commandLog.txt", "a")
-        f.write(COMMAND_LOG_COUNT)
-        f.close()
+    f = open("commandLog.txt", "a")
+    f.write(current_time + "\t" + json.dumps(COMMAND_LOG_COUNT) + "\n")
+    f.close()
 
 
 checkTime()
