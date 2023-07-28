@@ -8,12 +8,12 @@ import threading
 
 client = discord.Client()
 OBJS = {
-    "Capture the Flag": ["Aquarius" "Argyle", "Detachment", "Empyrean"],
+    "Capture the Flag": ["Aquarius", "Argyle", "Empyrean"],
     "Oddball": ["Live Fire", "Recharge", "Streets"],
-    "Strongholds": ["Live Fire", "Recharge", "Streets"],
-    "King of the Hill": ["Live Fire", "Recharge", "Streets"]
+    "Strongholds": ["Live Fire", "Recharge", "Solitude"],
+    "King of the Hill": ["Live Fire", "Recharge", "Solitude"]
 }
-SLAYER = ["Aquarius", "Live Fire", "Recharge", "Streets", "Empyrean"]
+SLAYER = ["Aquarius", "Live Fire", "Recharge", "Streets", "Solitude"]
 
 def series(length):
     gts = list(OBJS)
