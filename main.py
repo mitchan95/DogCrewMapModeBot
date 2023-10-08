@@ -119,7 +119,10 @@ async def on_message(message):
     cmd_func = COMMANDS.get(message.content.casefold())
     if cmd_func:
         response = cmd_func(message)
-        await message.channel.send(response)
+        if isinstance(response, discord.Embed):
+            await message.channel.send(embed=response)
+        else:
+            await message.channel.send(response)
 
 def checkTime():
     # This function runs periodically every hour
