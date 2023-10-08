@@ -2,9 +2,18 @@ import random
 import discord
 import copy
 import json
-
 from datetime import datetime
 import threading
+import os
+from dotenv import load_dotenv
+import logging
+from logging_setup import setup_logging
+
+setup_logging()
+logging.info("Logging has been set up")
+
+load_dotenv()
+token = os.environ.get("DISCORD_BOT_TOKEN")
 
 client = discord.Client()
 OBJS = {
@@ -15,54 +24,45 @@ OBJS = {
 }
 SLAYER = ["Aquarius", "Live Fire", "Recharge", "Streets", "Solitude"]
 
-def series(length):
+def pick_map(available_maps, picked_maps, last_n=2):
+    """
+    Pick a map ensuring it wasn't picked in the last_n matches
+    """
+    valid_maps = list(set(available_maps) - set(picked_maps[-last_n:]))
+    if valid_maps:
+        return random.choice(valid_maps)
+    return None
+
+def series(length, OBJS, SLAYER):
     gts = list(OBJS)
     slayer_maps = copy.deepcopy(SLAYER)
     temp_objs = copy.deepcopy(OBJS)
     picked_gt = []
     picked_maps = []
     games = []
-    cur_map = None
 
     for i in range(length):
-        if i == 1 or i == 4 or i == 6:
-            while True:  # Pick a random slayer map, but make sure the map hasn't been played in the last 2 matches
-                cur_map = random.choice(list(set(slayer_maps) - {picked_maps[-1]}))
-                if picked_maps.count(cur_map) < 2 and cur_map != picked_maps[-1] and (cur_map != picked_maps[-2] if (i == 4 or i == 6) else True):
-                    picked_maps.append(cur_map)
-                    break
-
-            slayer_maps.remove(picked_maps[-1])
-            games.append("Slayer - " + picked_maps[-1])
+        if i in [1, 4, 6]:
+            cur_map = pick_map(slayer_maps, picked_maps, 2)
+            if cur_map:
+                picked_maps.append(cur_map)
+                slayer_maps.remove(cur_map)
+                games.append(f"Slayer - {cur_map}")
         elif i == 5:
-            picked_gt.append(random.choice(list(set(gts) - {'Capture the Flag'})))
-            while True:
-                cur_map = random.choice(list(set(temp_objs[picked_gt[-1]]) - {picked_maps[-1]}))
-                if picked_maps.count(cur_map) < 2 and cur_map != picked_maps[-1]:
-                    picked_maps.append(cur_map)
-                    break
-
-            games.append(picked_gt[-1] + " - " + picked_maps[-1])
-        elif i == 6:
-            while True:
-                cur_map = random.choice(list(set(slayer_maps) - {picked_maps[-1]}))
-                if picked_maps.count(cur_map) < 2 and cur_map != picked_maps[-1]:
-                    picked_maps.append(cur_map)
-                    break
-
-            games.append("Slayer - " + picked_maps[-1])
+            gt = random.choice(list(set(gts) - {'Capture the Flag'}))
+            picked_gt.append(gt)
+            cur_map = pick_map(temp_objs[gt], picked_maps, 1)
+            if cur_map:
+                picked_maps.append(cur_map)
+                games.append(f"{gt} - {cur_map}")
         else:
-            picked_gt.append(random.choice(list(set(gts) - set(picked_gt))))
-            while True:
-                cur_map = random.choice(temp_objs[picked_gt[-1]])
-                if len(picked_maps) == 0:
-                    break
-                elif picked_maps.count(cur_map) < 2 and cur_map != picked_maps[-1] and cur_map != picked_maps[-2]:
-                    break
-
-            picked_maps.append(cur_map)
-            temp_objs[picked_gt[-1]].remove(picked_maps[-1])
-            games.append(picked_gt[-1] + " - " + picked_maps[-1])
+            gt = random.choice(list(set(gts) - set(picked_gt)))
+            picked_gt.append(gt)
+            cur_map = pick_map(temp_objs[gt], picked_maps, 2)
+            if cur_map:
+                picked_maps.append(cur_map)
+                temp_objs[gt].remove(cur_map)
+                games.append(f"{gt} - {cur_map}")
 
     return games
 
@@ -75,10 +75,7 @@ def create_embed(matches, length):
     for i in range(len(matches)):
         embed.add_field(name="Game " + str(i + 1), value=matches[i], inline=False)
 
-    #embed.set_footer(text="Spar needs a booster seat to see his monitior.")
-
     return embed
-
 
 def coinflip():
     percent = random.randint(0, 100);
@@ -89,60 +86,48 @@ def coinflip():
     else:
         return "You're both losers!"
 
-
 def rand_number():
     return random.randint(1, 10)
 
 @client.event
 async def on_ready():
-    print("We have logged in as {0.user}".format(client))
+    logging.info(f"We have logged in as {client.user}")
 
 
 COMMAND_LOG_COUNT = {'BO3': 0, 'BO5': 0, 'BO7': 0, 'Coinflip': 0, 'Number': 0}
+
+def handle_bo_command(length, message):
+    matches = series(length, OBJS, SLAYER)
+    embed = create_embed(matches, length)
+    COMMAND_LOG_COUNT[f'BO{length}'] += 1
+    return embed
+
+COMMANDS = {
+    '!bo3': lambda m: handle_bo_command(3, m),
+    '!bo5': lambda m: handle_bo_command(5, m),
+    '!bo7': lambda m: handle_bo_command(7, m),
+    '!coinflip': lambda m: coinflip(),
+    '!number': lambda m: rand_number(),
+    '!botservers': lambda m: f"I'm in {len(client.guilds)} servers!"
+}
 
 @client.event
 async def on_message(message):
     if message.author == client.user:
         return
-    if message.content.casefold() == "!bo3":
-        COMMAND_LOG_COUNT['BO3'] += 1
-        matches = series(3)
-        embed = create_embed(matches, 3)
-        await message.channel.send(embed=embed)
-    elif message.content.casefold() == "!bo5":
-        COMMAND_LOG_COUNT['BO5'] += 1
-        matches = series(5)
-        embed = create_embed(matches, 5)
-        await message.channel.send(embed=embed)
-    elif message.content.casefold() == "!bo7":
-        COMMAND_LOG_COUNT['BO7'] += 1
-        matches = series(7)
-        embed = create_embed(matches, 7)
-        await message.channel.send(embed=embed)
-    elif message.content.casefold() == "!coinflip":
-        COMMAND_LOG_COUNT['Coinflip'] += 1
-        await message.channel.send(coinflip())
-    elif message.content.casefold() == "!number":
-        COMMAND_LOG_COUNT['Number'] += 1
-        await message.channel.send(rand_number())
-    elif message.content.casefold() == "!botservers":
-        await message.channel.send("I'm in " + str(len(client.guilds)) + " servers!")
 
-with open("token.txt") as f:
-    token = f.readline().rstrip()
+    cmd_func = COMMANDS.get(message.content.casefold())
+    if cmd_func:
+        response = cmd_func(message)
+        await message.channel.send(response)
 
 def checkTime():
-    # This function runs periodically every 1 second
+    # This function runs periodically every hour
     threading.Timer(3600, checkTime).start()
 
-    now = datetime.now()
-
-    current_time = now.strftime("%H:%M:%S")
-    print("Current Time =", current_time)
-
-    f = open("commandLog.txt", "a")
-    f.write(current_time + "\t" + json.dumps(COMMAND_LOG_COUNT) + "\n")
-    f.close()
+    # Log current time with format "Mon Month Day HH:MM:SS", e.g., "Thu Oct 14 15:30:45"
+    logging.info(f"Current Time = {datetime.now().strftime('%a %b %d %H:%M:%S')}")
+    logging.info(f"Command Log Count: {json.dumps(COMMAND_LOG_COUNT)}")
 
 
 checkTime()
