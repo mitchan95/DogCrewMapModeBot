@@ -20,7 +20,8 @@ OBJS = {
     "Capture the Flag": ["Aquarius", "Argyle", "Empyrean"],
     "Oddball": ["Live Fire", "Recharge", "Streets"],
     "Strongholds": ["Live Fire", "Recharge", "Solitude"],
-    "King of the Hill": ["Live Fire", "Recharge", "Solitude"]
+    "King of the Hill": ["Live Fire", "Recharge", "Solitude"],
+    "Extraction": ["Live Fire", "Recharge", "Streets"],
 }
 SLAYER = ["Aquarius", "Live Fire", "Recharge", "Streets", "Solitude"]
 
