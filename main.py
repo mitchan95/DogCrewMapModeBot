@@ -20,8 +20,12 @@ intents = discord.Intents.default()
 
 # Enable guild messages to listen to messages in servers
 intents.guild_messages = True
+intents.messages = True
+intents.message_content = True
 
 client = discord.Client(intents=intents)
+
+
 OBJS = {
     "Capture the Flag": ["Aquarius", "Argyle", "Empyrean", "Forbidden"],
     "Oddball": ["Live Fire", "Recharge", "Streets"],
@@ -123,6 +127,7 @@ async def on_message(message):
         return
 
     cmd_func = COMMANDS.get(message.content.casefold())
+
     if cmd_func:
         response = cmd_func(message)
         if isinstance(response, discord.Embed):
