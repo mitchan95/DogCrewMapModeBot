@@ -15,7 +15,13 @@ logging.info("Logging has been set up")
 load_dotenv()
 token = os.environ.get("DISCORD_BOT_TOKEN")
 
-client = discord.Client()
+# Initialize the intents
+intents = discord.Intents.default()
+
+# Enable guild messages to listen to messages in servers
+intents.guild_messages = True
+
+client = discord.Client(intents=intents)
 OBJS = {
     "Capture the Flag": ["Aquarius", "Argyle", "Empyrean", "Forbidden"],
     "Oddball": ["Live Fire", "Recharge", "Streets"],
