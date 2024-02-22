@@ -17,11 +17,10 @@ token = os.environ.get("DISCORD_BOT_TOKEN")
 
 client = discord.Client()
 OBJS = {
-    "Capture the Flag": ["Aquarius", "Argyle", "Empyrean"],
+    "Capture the Flag": ["Aquarius", "Argyle", "Empyrean", "Forbidden"],
     "Oddball": ["Live Fire", "Recharge", "Streets"],
     "Strongholds": ["Live Fire", "Recharge", "Solitude"],
     "King of the Hill": ["Live Fire", "Recharge", "Solitude"],
-    "Extraction": ["Live Fire", "Recharge", "Streets"],
 }
 SLAYER = ["Aquarius", "Live Fire", "Recharge", "Streets", "Solitude"]
 
