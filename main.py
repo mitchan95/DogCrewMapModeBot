@@ -1,29 +1,24 @@
-import random
 import discord
+from discord.ext import commands
+import random
 import copy
-import json
-from datetime import datetime
-import threading
 import os
 from dotenv import load_dotenv
 import logging
 from logging_setup import setup_logging
+import json
+from datetime import datetime
+import threading
 
 setup_logging()
-logging.info("Logging has been set up")
 
+# Load environment variables
 load_dotenv()
 token = os.environ.get("DISCORD_BOT_TOKEN")
 
-# Initialize the intents
+# Initialize the bot with intents
 intents = discord.Intents.default()
-
-# Enable guild messages to listen to messages in servers
-intents.guild_messages = True
-intents.messages = True
-intents.message_content = True
-
-client = discord.Client(intents=intents)
+bot = commands.Bot(command_prefix="!", intents=intents)
 
 
 OBJS = {
@@ -99,11 +94,6 @@ def coinflip():
 def rand_number():
     return random.randint(1, 10)
 
-@client.event
-async def on_ready():
-    logging.info(f"We have logged in as {client.user}")
-
-
 COMMAND_LOG_COUNT = {'BO3': 0, 'BO5': 0, 'BO7': 0, 'Coinflip': 0, 'Number': 0}
 
 def handle_bo_command(length, message):
@@ -121,19 +111,51 @@ COMMANDS = {
     '!botservers': lambda m: f"I'm in {len(client.guilds)} servers!"
 }
 
-@client.event
-async def on_message(message):
-    if message.author == client.user:
-        return
+class MatchCommands(commands.Cog):
+    def __init__(self, bot):
+        self.bot = bot
 
-    cmd_func = COMMANDS.get(message.content.casefold())
+    @discord.app_commands.command(name="bo3", description="Starts a BO3 series")
+    async def bo3(self, interaction: discord.Interaction):
+        matches = series(3, OBJS, SLAYER)
+        embed = create_embed(matches, 3)
+        await interaction.response.send_message(embed=embed)
 
-    if cmd_func:
-        response = cmd_func(message)
-        if isinstance(response, discord.Embed):
-            await message.channel.send(embed=response)
-        else:
-            await message.channel.send(response)
+    @discord.app_commands.command(name="bo5", description="Starts a BO5 series")
+    async def bo5(self, interaction: discord.Interaction):
+        matches = series(5, OBJS, SLAYER)
+        embed = create_embed(matches, 5)
+        await interaction.response.send_message(embed=embed)
+
+    @discord.app_commands.command(name="bo7", description="Starts a BO7 series")
+    async def bo7(self, interaction: discord.Interaction):
+        matches = series(7, OBJS, SLAYER)
+        embed = create_embed(matches, 7)
+        await interaction.response.send_message(embed=embed)
+
+    @discord.app_commands.command(name="coinflip", description="Flips a coin")
+    async def coinflip(self, interaction: discord.Interaction):
+        result = coinflip()  # Assuming coinflip() is defined elsewhere
+        await interaction.response.send_message(result)
+
+    @discord.app_commands.command(name="number", description="Generates a random number")
+    async def number(self, interaction: discord.Interaction):
+        number = rand_number()  # Assuming rand_number() is defined elsewhere
+        await interaction.response.send_message(str(number))
+
+    @discord.app_commands.command(name="botservers", description="Shows the number of servers the bot is in")
+    async def botservers(self, interaction: discord.Interaction):
+        await interaction.response.send_message(f"I'm in {len(self.bot.guilds)} servers!")
+
+
+async def setup(bot):
+    await bot.add_cog(MatchCommands(bot))
+    await bot.tree.sync()
+
+@bot.event
+async def on_ready():
+    await setup(bot)
+    logging.info(f"We have logged in as {bot.user}")
 
 def checkTime():
     # This function runs periodically every hour
@@ -146,4 +168,4 @@ def checkTime():
 
 checkTime()
 
-client.run(token)
+bot.run(token)
