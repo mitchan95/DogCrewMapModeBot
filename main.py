@@ -120,28 +120,33 @@ class MatchCommands(commands.Cog):
         matches = series(3, OBJS, SLAYER)
         embed = create_embed(matches, 3)
         await interaction.response.send_message(embed=embed)
+        COMMAND_LOG_COUNT['BO3'] += 1
 
     @discord.app_commands.command(name="bo5", description="Starts a BO5 series")
     async def bo5(self, interaction: discord.Interaction):
         matches = series(5, OBJS, SLAYER)
         embed = create_embed(matches, 5)
         await interaction.response.send_message(embed=embed)
+        COMMAND_LOG_COUNT['BO5'] += 1
 
     @discord.app_commands.command(name="bo7", description="Starts a BO7 series")
     async def bo7(self, interaction: discord.Interaction):
         matches = series(7, OBJS, SLAYER)
         embed = create_embed(matches, 7)
         await interaction.response.send_message(embed=embed)
+        COMMAND_LOG_COUNT['BO7'] += 1
 
     @discord.app_commands.command(name="coinflip", description="Flips a coin")
     async def coinflip(self, interaction: discord.Interaction):
         result = coinflip()  # Assuming coinflip() is defined elsewhere
         await interaction.response.send_message(result)
+        COMMAND_LOG_COUNT['Coinflip'] += 1
 
     @discord.app_commands.command(name="number", description="Generates a random number")
     async def number(self, interaction: discord.Interaction):
         number = rand_number()  # Assuming rand_number() is defined elsewhere
         await interaction.response.send_message(str(number))
+        COMMAND_LOG_COUNT['Number'] += 1
 
     @discord.app_commands.command(name="botservers", description="Shows the number of servers the bot is in")
     async def botservers(self, interaction: discord.Interaction):
