@@ -88,15 +88,22 @@ def series(length, mode="arena"):
                 games.append(f"{gt} - {cur_map}")
 
     return games
-
-def create_embed(matches, length):
-    embed = discord.Embed(title="BO" + str(length) + " Series",
-                          description="Maps to be played in best of " + str(length) + " series")
+ 
+def create_embed(matches, length, mode):
+    # Adjust the title based on the mode
+    embed = discord.Embed(
+        title=f"{mode} BO{length} Series",
+        description=f"{mode} maps - best of {length}"
+    )
+    
+    # Set the thumbnail URL
     embed.set_thumbnail(
-        url="https://i1.wp.com/www.thexboxhub.com/wp-content/uploads/2022/02/halo-infinite-header.jpg?fit=1083%2C609&ssl=1")
+        url="https://alltimelines.com/wp-content/uploads/2019/10/halo-banner.jpg"
+    )
 
+    # Add each match as a field in the embed
     for i in range(len(matches)):
-        embed.add_field(name="Game " + str(i + 1), value=matches[i], inline=False)
+        embed.add_field(name=f"Game {i + 1}", value=matches[i], inline=False)
 
     return embed
 
