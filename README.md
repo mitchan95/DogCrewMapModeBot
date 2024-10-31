@@ -1,6 +1,7 @@
 # Halo Infinite Game Series Bot
 
 🛡️ **Purpose:** 
+
 Forked from Harbus2918's Halo Infinite Game Series Bot. 
 
 The fork is intended to expand on the types of map/mode combos that can be generated. Including the full expanded Ranked Arena playlist, HCS playlist and (in future) community map/modes.
