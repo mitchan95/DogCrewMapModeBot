@@ -148,21 +148,21 @@ class MatchCommands(commands.Cog):
     @discord.app_commands.command(name="bo3_arena", description="Starts a Bo3 series for arena")
     async def bo3_arena(self, interaction: discord.Interaction):
         matches = series(3, mode="arena")
-        embed = create_embed(matches, 3)
+        embed = create_embed(matches, 3, mode="arena")
         await interaction.response.send_message(embed=embed)
         COMMAND_LOG_COUNT['bo3_arena'] += 1
 
     @discord.app_commands.command(name="bo5_arena", description="Starts a Bo5 series for arena")
     async def bo5_arena(self, interaction: discord.Interaction):
         matches = series(5, mode="arena")
-        embed = create_embed(matches, 5)
+        embed = create_embed(matches, 5, mode="arena")
         await interaction.response.send_message(embed=embed)
         COMMAND_LOG_COUNT['bo5_arena'] += 1
 
     @discord.app_commands.command(name="bo7_arena", description="Starts a Bo7 series for arena")
     async def bo7_arena(self, interaction: discord.Interaction):
         matches = series(7, mode="arena")
-        embed = create_embed(matches, 7)
+        embed = create_embed(matches, 7, mode="arena")
         await interaction.response.send_message(embed=embed)
         COMMAND_LOG_COUNT['bo7_arena'] += 1
     
@@ -171,21 +171,21 @@ class MatchCommands(commands.Cog):
     @discord.app_commands.command(name="bo3_hcs", description="Starts a Bo3 series for hcs")
     async def bo3_hcs(self, interaction: discord.Interaction):
         matches = series(3, mode="hcs")
-        embed = create_embed(matches, 3)
+        embed = create_embed(matches, 3, mode="hcs")
         await interaction.response.send_message(embed=embed)
         COMMAND_LOG_COUNT['bo3_hcs'] += 1
 
     @discord.app_commands.command(name="bo5_hcs", description="Starts a Bo5 series for hcs")
     async def bo5_hcs(self, interaction: discord.Interaction):
         matches = series(5, mode="hcs")
-        embed = create_embed(matches, 5)
+        embed = create_embed(matches, 5, mode="hcs")
         await interaction.response.send_message(embed=embed)
         COMMAND_LOG_COUNT['bo5_hcs'] += 1
 
     @discord.app_commands.command(name="bo7_hcs", description="Starts a Bo7 series for hcs")
     async def bo7_hcs(self, interaction: discord.Interaction):
         matches = series(7, mode="hcs")
-        embed = create_embed(matches, 7)
+        embed = create_embed(matches, 7, mode="hcs")
         await interaction.response.send_message(embed=embed)
         COMMAND_LOG_COUNT['bo7_hcs'] += 1
 
