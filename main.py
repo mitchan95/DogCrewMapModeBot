@@ -112,7 +112,7 @@ def coinflip():
 def rand_number():
     return random.randint(1, 10)
 
-COMMAND_LOG_COUNT = {'BO3_arena': 0, 'BO5_arena': 0, 'BO7_arena': 0, 'Coinflip': 0, 'Number': 0}
+COMMAND_LOG_COUNT = {'BO3_arena': 0, 'BO5_arena': 0, 'BO7_arena': 0, BO3_hcs': 0, 'BO5_hcs': 0, 'BO7_hcs': 0, 'Coinflip': 0, 'Number': 0}
 
 def handle_bo_command(length, message):
     matches = series(length, OBJS, SLAYER)
@@ -121,12 +121,12 @@ def handle_bo_command(length, message):
     return embed
 
 COMMANDS = {
-    '!Bo3_arena': lambda m: handle_bo_command(3, m, mode="Arena"),
-    '!Bo5_arena': lambda m: handle_bo_command(5, m, mode="Arena"),
-    '!Bo7_arena': lambda m: handle_bo_command(7, m, mode="Arena"),
-    '!Bo3_hcs': lambda m: handle_bo_command(3, m, mode="HCS"),
-    '!Bo5_hcs': lambda m: handle_bo_command(5, m, mode="HCS"),
-    '!Bo7_hcs': lambda m: handle_bo_command(7, m, mode="HCS"),
+    '!bo3_arena': lambda m: handle_bo_command(3, m, mode="Arena"),
+    '!bo5_arena': lambda m: handle_bo_command(5, m, mode="Arena"),
+    '!bo7_arena': lambda m: handle_bo_command(7, m, mode="Arena"),
+    '!bo3_hcs': lambda m: handle_bo_command(3, m, mode="HCS"),
+    '!bo5_hcs': lambda m: handle_bo_command(5, m, mode="HCS"),
+    '!bo7_hcs': lambda m: handle_bo_command(7, m, mode="HCS"),
     '!coinflip': lambda m: coinflip(),
     '!number': lambda m: rand_number(),
     '!botservers': lambda m: f"I'm in {len(client.guilds)} servers!"
