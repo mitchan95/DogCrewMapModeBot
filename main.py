@@ -20,24 +20,24 @@ token = os.environ.get("DISCORD_BOT_TOKEN")
 intents = discord.Intents.default()
 bot = commands.Bot(command_prefix="!", intents=intents)
 
-# Arena Mode Objectives and Slayer maps
-ARENA_OBJS = {
+# arena Mode Objectives and Slayer maps
+arena_OBJS = {
     "Capture the Flag": ["Aquarius", "Argyle", "Empyrean", "Forbidden", "Fortress", "Inquisitor"],
     "Oddball": ["Live Fire", "Recharge", "Streets"],
     "Strongholds": ["Live Fire", "Recharge", "Solitude","Interference"],
     "King of the Hill": ["Live Fire", "Recharge", "Solitude", "Interference"],
 }
-ARENA_SLAYER = ["Aquarius", "Live Fire", "Recharge", "Streets", "Solitude", "Interference","Fortress","Inquisitor"]
+arena_SLAYER = ["Aquarius", "Live Fire", "Recharge", "Streets", "Solitude", "Interference","Fortress","Inquisitor"]
 
-# HCS Mode Objectives and Slayer maps
+# hcs Mode Objectives and Slayer maps
 
-HCS_OBJS = {
+hcs_OBJS = {
     "Capture the Flag": ["Aquarius", "Argyle", "Empyrean", "Forbidden",],
     "Oddball": ["Live Fire", "Recharge", "Streets"],
     "Strongholds": ["Live Fire", "Recharge", "Solitude","Interference"],
     "King of the Hill": ["Live Fire", "Recharge", "Solitude"],
 }
-HCS_SLAYER = ["Aquarius", "Live Fire", "Recharge", "Streets", "Solitude"]
+hcs_SLAYER = ["Aquarius", "Live Fire", "Recharge", "Streets", "Solitude"]
 
 def pick_map(available_maps, picked_maps, last_n=2):
     """
@@ -48,17 +48,17 @@ def pick_map(available_maps, picked_maps, last_n=2):
         return random.choice(valid_maps)
     return None
 
-def series(length, mode="Arena"):
-    if mode == "Arena":
-        gts = list(ARENA_OBJS)
-        slayer_maps = copy.deepcopy(ARENA_SLAYER)
-        temp_objs = copy.deepcopy(ARENA_OBJS)
-    elif mode == "HCS":
-        gts = list(HCS_OBJS)
-        slayer_maps = copy.deepcopy(HCS_SLAYER)
-        temp_objs = copy.deepcopy(HCS_OBJS)
+def series(length, mode="arena"):
+    if mode == "arena":
+        gts = list(arena_OBJS)
+        slayer_maps = copy.deepcopy(arena_SLAYER)
+        temp_objs = copy.deepcopy(arena_OBJS)
+    elif mode == "hcs":
+        gts = list(hcs_OBJS)
+        slayer_maps = copy.deepcopy(hcs_SLAYER)
+        temp_objs = copy.deepcopy(hcs_OBJS)
     else:
-        raise ValueError("Invalid mode. Choose 'Arena' or 'HCS'.")
+        raise ValueError("Invalid mode. Choose 'arena' or 'hcs'.")
 
     picked_gt = []
     picked_maps = []
@@ -121,12 +121,12 @@ def handle_bo_command(length, message):
     return embed
 
 COMMANDS = {
-    '!bo3_arena': lambda m: handle_bo_command(3, m, mode="Arena"),
-    '!bo5_arena': lambda m: handle_bo_command(5, m, mode="Arena"),
-    '!bo7_arena': lambda m: handle_bo_command(7, m, mode="Arena"),
-    '!bo3_hcs': lambda m: handle_bo_command(3, m, mode="HCS"),
-    '!bo5_hcs': lambda m: handle_bo_command(5, m, mode="HCS"),
-    '!bo7_hcs': lambda m: handle_bo_command(7, m, mode="HCS"),
+    '!bo3_arena': lambda m: handle_bo_command(3, m, mode="arena"),
+    '!bo5_arena': lambda m: handle_bo_command(5, m, mode="arena"),
+    '!bo7_arena': lambda m: handle_bo_command(7, m, mode="arena"),
+    '!bo3_hcs': lambda m: handle_bo_command(3, m, mode="hcs"),
+    '!bo5_hcs': lambda m: handle_bo_command(5, m, mode="hcs"),
+    '!bo7_hcs': lambda m: handle_bo_command(7, m, mode="hcs"),
     '!coinflip': lambda m: coinflip(),
     '!number': lambda m: rand_number(),
     '!botservers': lambda m: f"I'm in {len(client.guilds)} servers!"
@@ -136,48 +136,48 @@ class MatchCommands(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
    
-    # Arena Mode Commands
+    # arena Mode Commands
     
-    @discord.app_commands.command(name="bo3_arena", description="Starts a Bo3 series for Arena")
+    @discord.app_commands.command(name="bo3_arena", description="Starts a Bo3 series for arena")
     async def bo3_arena(self, interaction: discord.Interaction):
-        matches = series(3, mode="Arena")
+        matches = series(3, mode="arena")
         embed = create_embed(matches, 3)
         await interaction.response.send_message(embed=embed)
         COMMAND_LOG_COUNT['bo3_arena'] += 1
 
-    @discord.app_commands.command(name="bo5_arena", description="Starts a Bo5 series for Arena")
+    @discord.app_commands.command(name="bo5_arena", description="Starts a Bo5 series for arena")
     async def bo5_arena(self, interaction: discord.Interaction):
-        matches = series(5, mode="Arena")
+        matches = series(5, mode="arena")
         embed = create_embed(matches, 5)
         await interaction.response.send_message(embed=embed)
         COMMAND_LOG_COUNT['bo5_arena'] += 1
 
-    @discord.app_commands.command(name="bo7_arena", description="Starts a Bo7 series for Arena")
+    @discord.app_commands.command(name="bo7_arena", description="Starts a Bo7 series for arena")
     async def bo7_arena(self, interaction: discord.Interaction):
-        matches = series(7, mode="Arena")
+        matches = series(7, mode="arena")
         embed = create_embed(matches, 7)
         await interaction.response.send_message(embed=embed)
         COMMAND_LOG_COUNT['bo7_arena'] += 1
     
-    # HCS Mode Commands
+    # hcs Mode Commands
     
-    @discord.app_commands.command(name="bo3_hcs", description="Starts a Bo3 series for HCS")
+    @discord.app_commands.command(name="bo3_hcs", description="Starts a Bo3 series for hcs")
     async def bo3_hcs(self, interaction: discord.Interaction):
-        matches = series(3, mode="HCS")
+        matches = series(3, mode="hcs")
         embed = create_embed(matches, 3)
         await interaction.response.send_message(embed=embed)
         COMMAND_LOG_COUNT['bo3_hcs'] += 1
 
-    @discord.app_commands.command(name="bo5_hcs", description="Starts a Bo5 series for HCS")
+    @discord.app_commands.command(name="bo5_hcs", description="Starts a Bo5 series for hcs")
     async def bo5_hcs(self, interaction: discord.Interaction):
-        matches = series(5, mode="HCS")
+        matches = series(5, mode="hcs")
         embed = create_embed(matches, 5)
         await interaction.response.send_message(embed=embed)
         COMMAND_LOG_COUNT['bo5_hcs'] += 1
 
-    @discord.app_commands.command(name="bo7_hcs", description="Starts a Bo7 series for HCS")
+    @discord.app_commands.command(name="bo7_hcs", description="Starts a Bo7 series for hcs")
     async def bo7_hcs(self, interaction: discord.Interaction):
-        matches = series(7, mode="HCS")
+        matches = series(7, mode="hcs")
         embed = create_embed(matches, 7)
         await interaction.response.send_message(embed=embed)
         COMMAND_LOG_COUNT['bo7_hcs'] += 1
