@@ -112,7 +112,7 @@ def coinflip():
 def rand_number():
     return random.randint(1, 10)
 
-COMMAND_LOG_COUNT = {'BO3_arena': 0, 'BO5_arena': 0, 'BO7_arena': 0, 'BO3_hcs': 0, 'BO5_hcs': 0, 'BO7_hcs': 0, 'Coinflip': 0, 'Number': 0}
+COMMAND_LOG_COUNT = {'bo3_arena': 0, 'bo5_arena': 0, 'bo7_arena': 0, 'bo3_hcs': 0, 'bo5_hcs': 0, 'bo7_hcs': 0, 'Coinflip': 0, 'Number': 0}
 
 def handle_bo_command(length, message):
     matches = series(length, OBJS, SLAYER)
