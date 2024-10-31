@@ -24,7 +24,7 @@ bot = commands.Bot(command_prefix="!", intents=intents)
 arena_OBJS = {
     "Capture the Flag": ["Aquarius", "Argyle", "Empyrean", "Forbidden", "Fortress", "Inquisitor"],
     "Oddball": ["Live Fire", "Recharge", "Streets"],
-    "Strongholds": ["Live Fire", "Recharge", "Solitude","Interference"],
+    "Strongholds": ["Live Fire", "Recharge","Interference"],
     "King of the Hill": ["Live Fire", "Recharge", "Solitude", "Interference"],
 }
 arena_SLAYER = ["Aquarius", "Live Fire", "Recharge", "Streets", "Solitude", "Interference","Fortress","Inquisitor"]
@@ -34,7 +34,7 @@ arena_SLAYER = ["Aquarius", "Live Fire", "Recharge", "Streets", "Solitude", "Int
 hcs_OBJS = {
     "Capture the Flag": ["Aquarius", "Argyle", "Empyrean", "Forbidden",],
     "Oddball": ["Live Fire", "Recharge", "Streets"],
-    "Strongholds": ["Live Fire", "Recharge", "Solitude","Interference"],
+    "Strongholds": ["Live Fire", "Recharge", "Interference"],
     "King of the Hill": ["Live Fire", "Recharge", "Solitude"],
 }
 hcs_SLAYER = ["Aquarius", "Live Fire", "Recharge", "Streets", "Solitude"]
