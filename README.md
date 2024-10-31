@@ -12,7 +12,7 @@ The fork is intended to expand on the types of map/mode combos that can be gener
   - **Custom Game Series Creation:**
     - `!bo3_arena`: Bo3 with Ranked Arena map/modes
     - `!bo5_arena`: Bo5 with Ranked Arena map/modes
-    - `!bo7_arena`: Bo6 with Ranked Arena map/modes
+    - `!bo7_arena`: Bo7 with Ranked Arena map/modes
     - `!bo3_hcs`: Bo3 with HCS map/modes
     - `!bo5_hcs`: Bo5 with HCS map/modes
     - `!bo7_hcs`: Bo7 with HCS map/modes
