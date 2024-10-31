@@ -1,7 +1,8 @@
 # Halo Infinite Game Series Bot
 
 🛡️ **Purpose:** 
-I'm designed to enhance your Halo Infinite gaming experience! Whether you're looking to mix up your gameplay with new map and game type combinations or simply add some randomness to your matches, I've got you covered.
+Forked from Harbus2918's Halo Infinite Game Series Bot. The fork is intended to expand on the types of map/mode combos that can be generated. Including the full expanded Ranked Arena playlist and (in future) community map/modes.
+
 
 🎮 **Features:**
 
@@ -14,18 +15,4 @@ I'm designed to enhance your Halo Infinite gaming experience! Whether you're loo
     - `!coinflip`: Can't decide on something? Let me flip a coin for you.
     - `!number`: Fetch a random number between 1 and 10.
 
-🌌 **Background:** 
-I'm inspired by the vast universe of Halo Infinite, designed to offer players custom game series options for 8s matches. I take into account different game types like Capture the Flag, Oddball, Strongholds, King of the Hill, and Slayer across various maps like Aquarius, Live Fire, Recharge, and more.
 
-🛠️ **Technical Details:** 
-My code is robust, with functionalities like ensuring no map repetition in recent matches, generating embeds for an organized display, and periodically logging commands for insights.
-
-📜 **Terms of Service:**
-Before using the bot, please ensure you're familiar with our [Terms of Service](https://harbus2918.github.io/haloinfinite8sbot/tos).
-
-🔒 **Privacy Policy:**
-Before using the bot, please ensure you're familiar with our [Privacy Policy](https://harbus2918.github.io/haloinfinite8sbot/privacy-policy).
-
-Thank you for choosing the Halo Infinite 8s Series Bot. Enjoy your games and may the best Spartans win!
-
-For any questions, feedback, or support, please reach out on Discord (idefend) or raise an issue on this repository.
