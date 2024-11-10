@@ -92,8 +92,8 @@ def series(length, mode="arena"):
 def create_embed(matches, length, mode):
     # Adjust the title based on the mode
     embed = discord.Embed(
-        title=f"capitalize({mode}) BO{length} Series",
-        description=f"capitalize({mode}) maps - best of {length}"
+        title=f"{mode} BO{length} Series",
+        description=f"{mode} maps - best of {length}"
     )
     
     # Set the thumbnail URL
