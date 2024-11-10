@@ -131,12 +131,48 @@ class MatchCommands(commands.Cog):
         await interaction.response.send_message(embed=create_embed(matches, 3, "Arena"))
         COMMAND_LOG_COUNT['bo3_arena'] += 1
 
+    @discord.app_commands.command(name="bo5_arena", description="Starts a Bo5 series for Arena")
+    async def bo3_arena(self, interaction):
+        matches = series(5, mode="Arena")
+        await interaction.response.send_message(embed=create_embed(matches, 5, "Arena"))
+        COMMAND_LOG_COUNT['bo5_arena'] += 1
+    
+    @discord.app_commands.command(name="bo7_arena", description="Starts a Bo7 series for Arena")
+    async def bo3_arena(self, interaction):
+        matches = series(7, mode="Arena")
+        await interaction.response.send_message(embed=create_embed(matches, 7, "Arena"))
+        COMMAND_LOG_COUNT['bo7_arena'] += 1
+
+    @discord.app_commands.command(name="bo3_hcs", description="Starts a Bo3 series for HCS")
+    async def bo5_hcs(self, interaction):
+        matches = series(3, mode="HCS")
+        await interaction.response.send_message(embed=create_embed(matches, 3, "HCS"))
+        COMMAND_LOG_COUNT['bo3_hcs'] += 1
+    
     @discord.app_commands.command(name="bo5_hcs", description="Starts a Bo5 series for HCS")
     async def bo5_hcs(self, interaction):
         matches = series(5, mode="HCS")
         await interaction.response.send_message(embed=create_embed(matches, 5, "HCS"))
         COMMAND_LOG_COUNT['bo5_hcs'] += 1
+        
+    @discord.app_commands.command(name="bo7_hcs", description="Starts a Bo7 series for HCS")
+    async def bo5_hcs(self, interaction):
+        matches = series(7, mode="HCS")
+        await interaction.response.send_message(embed=create_embed(matches, 7, "HCS"))
+        COMMAND_LOG_COUNT['bo7_hcs'] += 1
 
+    @discord.app_commands.command(name="bo3_legacy", description="Starts a Bo3 series for Legacy")
+    async def bo7_legacy(self, interaction):
+        matches = series(3, mode="Legacy")
+        await interaction.response.send_message(embed=create_embed(matches, 3, "Legacy"))
+        COMMAND_LOG_COUNT['bo3_legacy'] += 1
+
+    @discord.app_commands.command(name="bo5_legacy", description="Starts a Bo5 series for Legacy")
+    async def bo7_legacy(self, interaction):
+        matches = series(5, mode="Legacy")
+        await interaction.response.send_message(embed=create_embed(matches, 5, "Legacy"))
+        COMMAND_LOG_COUNT['bo5_legacy'] += 1
+    
     @discord.app_commands.command(name="bo7_legacy", description="Starts a Bo7 series for Legacy")
     async def bo7_legacy(self, interaction):
         matches = series(7, mode="Legacy")
