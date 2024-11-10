@@ -121,6 +121,27 @@ COMMAND_LOG_COUNT = {
     'Coinflip': 0, 'Number': 0
 }
 
+def handle_bo_command(length, message):
+    matches = series(length, OBJS, SLAYER)
+    embed = create_embed(matches, length)
+    COMMAND_LOG_COUNT[f'BO{length}'] += 1
+    return embed
+
+COMMANDS = {
+    '!bo3_arena': lambda m: handle_bo_command(3, m, mode="Arena"),
+    '!bo5_arena': lambda m: handle_bo_command(5, m, mode="Arena"),
+    '!bo7_arena': lambda m: handle_bo_command(7, m, mode="Arena"),
+    '!bo3_hcs': lambda m: handle_bo_command(3, m, mode="HCS"),
+    '!bo5_hcs': lambda m: handle_bo_command(5, m, mode="HCS"),
+    '!bo7_hcs': lambda m: handle_bo_command(7, m, mode="HCS"),
+    '!bo3_legacy': lambda m: handle_bo_command(3, m, mode="Legacy"),
+    '!bo5_legacy': lambda m: handle_bo_command(5, m, mode="Legacy"),
+    '!bo7_legacy': lambda m: handle_bo_command(7, m, mode="Legacy"),
+    '!coinflip': lambda m: coinflip(),
+    '!number': lambda m: rand_number(),
+    '!botservers': lambda m: f"I'm in {len(client.guilds)} servers!"
+}
+
 class MatchCommands(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
